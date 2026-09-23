@@ -64,7 +64,7 @@ function clean(raw){
  for(const q of quizzes)if(raw.answers&&Number.isInteger(raw.answers[q.id])&&raw.answers[q.id]>=0&&raw.answers[q.id]<q.options.length)out.answers[q.id]=raw.answers[q.id];
  return out;
 }
-try{const old=localStorage.getItem(KEY)||localStorage.getItem('ian-fund-operations-learning-v1');if(old)state=clean(JSON.parse(old));localStorage.setItem(KEY,JSON.stringify(state));}catch(e){persistent=false;}
+try{const old=localStorage.getItem(KEY);if(old)state=clean(JSON.parse(old));localStorage.setItem(KEY,JSON.stringify(state));}catch(e){persistent=false;}
 function status(){const el=$('#storage-status');el.textContent=persistent?'● 进度已保存至本机':'未能保存 · 请导出备份';el.classList.toggle('unsaved',!persistent);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));persistent=true;}catch(e){persistent=false;}status();sidebar();}
 function sidebar(){const n=state.done.length;$('#side-progress').textContent=n+' / '+lessons.length+' 个单元已学';$('#side-bar').style.width=(n/lessons.length*100)+'%';const p=$('.progress');p.setAttribute('aria-valuenow',n);}
